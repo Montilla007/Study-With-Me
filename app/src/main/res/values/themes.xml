@@ -1,0 +1,66 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LoginSignupSWM" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_color</item>
+    </style>
+
+    <style name="ButtonColor">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ButtonColor2">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="backgroundTint">#fec775</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ButtonColor3">
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="backgroundTint">#807F7D</item>
+        <item name="android:enabled">false</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="Title">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#A16000</item>
+    </style>
+
+    <style name="SubTitle">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/black</item>
+        <item name="hintTextColor">@color/black</item>
+        <item name="startIconTint">#FFA426</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="TextInputEditText" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:background">@drawable/bg_text_feild</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <style name="Theme.LoginSignupSWM" parent="Base.Theme.LoginSignupSWM" />
+</resources>
