@@ -1,5 +1,6 @@
 package com.example.loginsignupswm
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -13,22 +14,22 @@ open class DatabaseHelper(private val context: Context):
     companion object{
         private const val DATABASE_NAME = "UserDatabase.db"
         private const val DATABASE_VERSION = 2
-        private const val TABLE_NAME = "data"
+        const val TABLE_NAME = "data"
         private const val COLUMN_ID = "id"
-        private const val COLUMN_USERNAME = "username"
+        const val COLUMN_USERNAME = "username"
         private const val COLUMN_PASSWORD = "password"
-        private const val COLUMN_FULLNAME = "fullname"
-        private const val COLUMN_EMAIL = "email"
+        const val COLUMN_FULLNAME = "fullname"
+        const val COLUMN_EMAIL = "email"
 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = ("CREATE TABLE $TABLE_NAME (" +
                 "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$COLUMN_USERNAME TEXT, " +
+                "$COLUMN_USERNAME TEXT, " + // Removed PRIMARY KEY constraint
                 "$COLUMN_PASSWORD TEXT, " +
-                "$COLUMN_FULLNAME TEXT, " +
-                "$COLUMN_EMAIL TEXT)") 
+                "$COLUMN_FULLNAME TEXT, " + // Added fullname column
+                "$COLUMN_EMAIL TEXT)") // Added email column
         db?.execSQL(createTableQuery)
         Log.i("Test", "Database")
     }
@@ -73,5 +74,42 @@ open class DatabaseHelper(private val context: Context):
         cursor.close()
         return userExists
     }
+    @SuppressLint("Range")
+    fun updateUsername(oldUsername: String, newUsername: String): Boolean {
+        val db = writableDatabase
+
+        // Check if the new username is already taken
+        if (isUsernameTaken(newUsername)) {
+            return false // Username is already taken
+        }
+
+        // Get the user's existing data
+        val selectQuery = "SELECT $COLUMN_FULLNAME, $COLUMN_EMAIL FROM $TABLE_NAME WHERE $COLUMN_USERNAME = ?"
+        val cursor = db.rawQuery(selectQuery, arrayOf(oldUsername))
+
+        if (cursor.moveToFirst()) {
+            val name = cursor.getString(cursor.getColumnIndex(COLUMN_FULLNAME))
+            val email = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL))
+
+            // Create a new record with the updated username
+            val values = ContentValues().apply {
+                put(COLUMN_USERNAME, newUsername)
+                put(COLUMN_FULLNAME, name)
+                put(COLUMN_EMAIL, email)
+            }
+
+            val newRowId = db.insert(TABLE_NAME, null, values)
+
+            // Delete the old record
+            db.delete(TABLE_NAME, "$COLUMN_USERNAME = ?", arrayOf(oldUsername))
+
+            return newRowId != -1L
+        }
+
+        cursor.close()
+        return false
+    }
+
+
 
 }

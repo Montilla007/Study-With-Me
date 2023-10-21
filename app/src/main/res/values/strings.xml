@@ -39,4 +39,7 @@
     <string name="home_title">STUDY WITH ME (HOME)</string>
     <string name="home_sub_title">WELCOMEEEEEE</string>
     <string name="btn_logout">LOGOUT</string>
+    <string name="edit_profile_BTN">Edit Profile</string>
+    <string name="log_out_BTN">LOG OUT</string>
+    <string name="edit_profile_txt">Edit Profile</string>
 </resources>

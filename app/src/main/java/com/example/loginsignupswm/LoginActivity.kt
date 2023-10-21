@@ -88,7 +88,11 @@ class LoginActivity : AppCompatActivity() {
         val userExists = databaseHelper.readUser(username, password)
         if (userExists) {
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, ProfileActivity::class.java)
+
+            // Pass the 'username' to ProfileActivity using an intent extra
+            intent.putExtra("username", username)
+
             startActivity(intent)
             finish()
         } else {
