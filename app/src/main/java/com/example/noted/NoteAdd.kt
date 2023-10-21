@@ -40,7 +40,6 @@ class NoteAdd : AppCompatActivity() {
             val intent = Intent(this, NoteList::class.java)
             startActivity(intent)
         }
-
         binding.btnNoteSave.setOnClickListener {
             Log.i("test", "Save note saved")
             val currentDate = Date()
