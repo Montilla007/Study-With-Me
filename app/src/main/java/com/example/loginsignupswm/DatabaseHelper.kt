@@ -12,19 +12,23 @@ open class DatabaseHelper(private val context: Context):
 
     companion object{
         private const val DATABASE_NAME = "UserDatabase.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val TABLE_NAME = "data"
         private const val COLUMN_ID = "id"
         private const val COLUMN_USERNAME = "username"
         private const val COLUMN_PASSWORD = "password"
+        private const val COLUMN_FULLNAME = "fullname"
+        private const val COLUMN_EMAIL = "email"
 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = ("CREATE TABLE $TABLE_NAME (" +
                 "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$COLUMN_USERNAME TEXT PRIMARY KEY, " +
-                "$COLUMN_PASSWORD TEXT)")
+                "$COLUMN_USERNAME TEXT, " +
+                "$COLUMN_PASSWORD TEXT, " +
+                "$COLUMN_FULLNAME TEXT, " +
+                "$COLUMN_EMAIL TEXT)") 
         db?.execSQL(createTableQuery)
         Log.i("Test", "Database")
     }
@@ -35,10 +39,12 @@ open class DatabaseHelper(private val context: Context):
         onCreate(db)
     }
 
-    fun insertUser(username: String, password: String): Long {
+    fun insertUser(username: String, password: String, fullname: String, email: String): Long {
         val values = ContentValues().apply {
             put(COLUMN_USERNAME, username)
             put(COLUMN_PASSWORD, password)
+            put(COLUMN_FULLNAME, fullname)
+            put(COLUMN_EMAIL, email)
         }
         val db = writableDatabase
         return try {
@@ -59,4 +65,13 @@ open class DatabaseHelper(private val context: Context):
         cursor.close()
         return userExists
     }
+    fun isUsernameTaken(username: String): Boolean {
+        val db = readableDatabase
+        val query = "SELECT $COLUMN_ID FROM $TABLE_NAME WHERE $COLUMN_USERNAME = ?"
+        val cursor = db.rawQuery(query, arrayOf(username))
+        val userExists = cursor.count > 0
+        cursor.close()
+        return userExists
+    }
+
 }

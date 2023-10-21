@@ -96,6 +96,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun showTextMinimalAlert(isNotValid: Boolean, text: String) {
         if (text == "Email/Username")
             binding.etEmail.error = if (isNotValid) "$text Cannot be empty!" else null
