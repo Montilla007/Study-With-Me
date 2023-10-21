@@ -47,7 +47,6 @@ class NoteAdd : AppCompatActivity() {
             val dateFormat = SimpleDateFormat("MMM dd, yyyy HH:mm:ss")
             val timestamp = dateFormat.format(currentDate)
 
-
             val title = binding.etNoteTitle.text.toString()
             val content = binding.etNoteDescription.text.toString()
 
