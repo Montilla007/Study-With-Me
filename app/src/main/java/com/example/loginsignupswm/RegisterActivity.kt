@@ -16,7 +16,6 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 @SuppressLint("CheckResult")
 class RegisterActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var databaseHelper: DatabaseHelper
 

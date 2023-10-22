@@ -6,9 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-open class DatabaseHelper(private val context: Context):
-             SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
-
+open class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION){
 
     companion object{
         private const val DATABASE_NAME = "UserDatabase.db"
@@ -19,7 +17,6 @@ open class DatabaseHelper(private val context: Context):
         private const val COLUMN_PASSWORD = "password"
         private const val COLUMN_FULLNAME = "fullname"
         private const val COLUMN_EMAIL = "email"
-
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -74,4 +71,23 @@ open class DatabaseHelper(private val context: Context):
         return userExists
     }
 
+    fun getAllUser(): List<User> {
+        val userList = mutableListOf<User>()
+        val databaseHelper = readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME"
+        val cursor = databaseHelper.rawQuery(query, null)
+
+        while (cursor.moveToNext()){
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            val fullname = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FULLNAME))
+            val email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMAIL))
+
+            val user = User(id, fullname, email)
+            userList.add(user)
+        }
+
+        cursor.close()
+        databaseHelper.close()
+        return userList
+    }
 }
