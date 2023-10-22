@@ -14,25 +14,19 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 @SuppressLint("CheckResult")
 class LoginActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityLoginBinding
     private lateinit var databaseHelper: DatabaseHelper
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         databaseHelper = DatabaseHelper(this)
-
         binding.btnLogin.setOnClickListener {
             val etEmail = binding.etEmail.text.toString()
             val etPassword = binding.etPassword.text.toString()
             loginDatabase(etEmail, etPassword)
             Log.i("Test", "HomeLogin")
         }
-
 
 //  Username Validation
 
@@ -76,9 +70,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-
-
-
         binding.tvHaventAccount.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -95,8 +86,6 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
         }
     }
-
-
 
     private fun showTextMinimalAlert(isNotValid: Boolean, text: String) {
         if (text == "Email/Username")

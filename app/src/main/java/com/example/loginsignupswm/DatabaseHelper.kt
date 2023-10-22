@@ -10,7 +10,7 @@ open class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
 
     companion object{
         private const val DATABASE_NAME = "UserDatabase.db"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val TABLE_NAME = "data"
         private const val COLUMN_ID = "id"
         private const val COLUMN_USERNAME = "username"
@@ -18,14 +18,13 @@ open class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         private const val COLUMN_FULLNAME = "fullname"
         private const val COLUMN_EMAIL = "email"
     }
-
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = ("CREATE TABLE $TABLE_NAME (" +
                 "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUMN_USERNAME TEXT, " +
                 "$COLUMN_PASSWORD TEXT, " +
                 "$COLUMN_FULLNAME TEXT, " +
-                "$COLUMN_EMAIL TEXT)") 
+                "$COLUMN_EMAIL TEXT)")
         db?.execSQL(createTableQuery)
         Log.i("Test", "Database")
     }
@@ -35,7 +34,6 @@ open class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         db?.execSQL(dropTableQuery)
         onCreate(db)
     }
-
     fun insertUser(username: String, password: String, fullname: String, email: String): Long {
         val values = ContentValues().apply {
             put(COLUMN_USERNAME, username)
@@ -51,7 +49,6 @@ open class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
             -1
         }
     }
-
     fun readUser(username: String, password: String): Boolean {
         val db = readableDatabase
         val selection = "$COLUMN_USERNAME = ? AND $COLUMN_PASSWORD = ?"
@@ -70,12 +67,12 @@ open class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE
         cursor.close()
         return userExists
     }
-
     fun getAllUser(): List<User> {
         val userList = mutableListOf<User>()
         val databaseHelper = readableDatabase
         val query = "SELECT * FROM $TABLE_NAME"
-        val cursor = databaseHelper.rawQuery(query, null)
+        val selectionArgs = arrayOf("value_to_skip")
+        val cursor = databaseHelper.rawQuery(query, selectionArgs)
 
         while (cursor.moveToNext()){
             val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
